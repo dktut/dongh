@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>body {
+        margin: 0;
+    }
+    canvas {
+        cursor: crosshair;
+    }</style>
+</head>
+<body>
+    <canvas></canvas>
+<script>
+class Circle {
+    constructor(x, y, radius, color, canvas, pen, player) {
+        this.canvas = canvas;
+        this.pen = pen;
+        this.x = x;
+        this.y = y;
+        this.vx = 0.1;
+        this.vy = 0.1;
+        this.radius = radius;
+        this.color = color;
+        this.player = player;
+    }
+    move() {
+        // move circle
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // check collision
+        if (this.x <= this.radius) {
+            this.vx = Math.abs(this.vx);
+        }
+        else if (this.x >= this.canvas.width - this.radius) {
+            this.vx = -Math.abs(this.vx);
+        }
+        if (this.y <= this.radius) {
+            this.vy = Math.abs(this.vy);
+        }
+        else if (this.y >= this.canvas.height - this.radius) {
+            this.vy = -Math.abs(this.vy);
+        }
+
+        if (this.collided()) {
+            this.color = 'red';
+        }
+    }
+    collided() {
+        let p = this.player;
+        let c = this;
+
+        let xCol1 = p.x >= c.x - c.radius - p.radius;
+        let xCol2 = p.x <= c.x + c.radius + p.radius;
+
+        let yCol1 = p.y >= c.y - c.radius - p.radius;
+        let yCol2 = p.y <= c.y + c.radius + p.radius;
+        
+
+        return xCol1 && xCol2 && yCol1 && yCol2 && this.collided_precise();
+    }
+    collided_precise() {
+        let p = this.player;
+        let c = this;
+
+        let actual = Math.pow(p.x - c.x, 2) + Math.pow(p.y - c.y, 2);
+        let minSq = Math.pow(p.radius + c.radius, 2);
+
+        return actual <= minSq;
+    }
+    draw() {
+        // draw circle
+        this.pen.beginPath();
+        this.pen.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        this.pen.fillStyle = this.color;
+        this.pen.fill();
+    }
+}
+
+class Player extends Circle {
+    constructor(x, y, radius, color, canvas, pen) {
+        super(x, y, radius, color, canvas, pen);
+
+        this.targetX = x;
+        this.targetY = y;
+        this.speed = 1;
+
+        document.addEventListener('mousemove', (event) => {
+            this.targetX = event.clientX;
+            this.targetY = event.clientY;
+        });
+    }
+    move() {
+        let dy = this.targetY - this.y;
+        let dx = this.targetX - this.x;
+        let angle = Math.atan2(dy, dx);
+        
+        let vx = this.speed * Math.cos(angle);
+        let vy = this.speed * Math.sin(angle);
+
+        this.x += vx;
+        this.y += vy;
+    }
+}
+
+
+let canvas = document.querySelector("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let pen = canvas.getContext('2d');
+
+let circles = [];
+let colors = ['tomato','lightgreen','gold','skyblue','silver'];
+
+circles[0] = new Player(100, 100, 10, 'black',canvas, pen);
+
+for(let i=1; i<20; i++) {
+    let size = Math.random() * 50 + 5;
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height;
+    let color = colors[i % colors.length];
+    circles[i] = new Circle(x, y, size, color, canvas, pen, circles[0]);
+}
+
+
+function play() {
+    pen.beginPath();
+    pen.rect(0, 0, canvas.width, canvas.height);
+    pen.fillStyle = 'white';
+    pen.fill();
+
+    circles.forEach(circle => {
+        circle.move();
+        circle.draw();
+    })
+
+    // setTimeout(play, 1000/60); 
+    requestAnimationFrame(play);
+}
+
+play();
+
+
+
+</script>
+</body>
+</html>

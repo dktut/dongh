@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: linear-gradient(90deg, #2e1b39 10%, #2b435f 30%, #2e1b39);
+  font-size: 14px;
+  font-family: 'Noto Sans', serif;
+}
+.shadowed {
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px #bbb;
+}
+.section {
+  padding: 60px 10%;
+}
+.section1 {
+  color: #fff;
+  text-align: right;
+}
+.section1 span {
+  font-size: 20px;
+  margin-left: 20px;
+}
+.section2 {
+  background: #ede3d7;
+}
+.section2 h1 {
+  margin: 20px 0 20px 0;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+.section2 .col-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 100px;
+}
+.section2 img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px #bbb;
+}
+.section2 p {
+  font-size: 18px;
+  line-height: 28px;
+}
+.section2 p span {
+  font-size: 24px;
+  font-weight: bolder;
+}
+.section2 .links {
+  display: flex;
+  flex-direction: column;
+}
+.section2 .links > a {
+  flex-grow: 1;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px #bbb;
+  margin-bottom: 25px;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 2em;
+  cursor: pointer;
+  text-decoration: none;
+}
+.section2 .links > a:last-child {
+  margin-bottom: 0;
+  color: #000;
+}
+.section3 h1 {
+  color: #ede3d7;
+  margin: 20px 0 20px 0;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+.section3 h1:not(:first-child) {
+  margin-top: 50px;
+}
+.section3 .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 150px 150px;
+  grid-gap: 50px;
+}
+.section3 .grid a {
+  text-decoration: none !important;
+}
+.section3 .grid > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #fff;
+  font-size: 3em;
+  text-shadow: 1px 1px 3px #808080;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.section3 .grid > * .bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.5;
+  z-index: -1;
+}
+.section3 .grid > div:hover .bg,
+.section3 .grid > a:hover .bg {
+  opacity: 0.8;
+  transform: scale(1.2);
+  transition: transform 1s;
+}
+.section3 .grid .achievements {
+  grid-column: 2;
+  grid-row: 1/span 2;
+}
+.section3 .grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 50px;
+}
+.section3 .grid2 img {
+  width: 100%;
+}
+.section3 .grid2 img:nth-child(5),
+.section3 .grid2 img:nth-child(6) {
+  transform: rotate(180deg);
+}
+.section3 .grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 50px;
+}
+.section3 .grid3 img {
+  width: 100%;
+}

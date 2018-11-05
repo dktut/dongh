@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <style>
+    body {
+  margin: 0;
+}
+.container {
+  height: 100vh;
+  color: gold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.box div {
+  border: 3px solid gold;
+  border-radius: 3px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.box div:hover {
+  background: gold;
+  color: black;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+          <div>start game</div>
+          <div>resume game</div>
+          <div>high scores</div>
+          <div>options</div>
+        </div>
+      </div>
+      
+      <canvas></canvas>
+
+<script>
+const colors = [
+  'salmon',
+  'lightgreen',
+  'skyblue',
+  'indigo',
+  'gold',
+  'white'
+];
+let canvas = document.querySelector("canvas");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+let ctx = canvas.getContext('2d');
+
+let dots = new Array(30).fill(0).map((_,i) => {
+  return {
+    x: Math.random() * canvas.width, 
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 0.2,
+    spd: Math.random() * 2 + 0.2,
+    color: colors[i%colors.length]
+  }
+});
+
+console.log(dots);
+
+setInterval(function() {
+
+  ctx.beginPath();
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fill();
+  ctx.arc(10, 10, 10, 0, Math.PI * 2);
+  
+  dots.forEach(d => {
+    ctx.beginPath();
+    ctx.fillStyle = d.color;
+    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    d.x+=d.spd;
+    d.y+=d.spd;
+    ctx.fill();
+    if (d.x > canvas.width) d.x = 0;
+    if (d.y > canvas.height) d.y = 0;
+    
+  });
+
+  
+}, 1000/30);
+</script>
+</body>
+
+</html>

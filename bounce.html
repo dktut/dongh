@@ -1,0 +1,75 @@
+<html>
+
+<head>
+	<style>
+		canvas {
+			border: 5px solid gold;
+		}
+	</style>
+
+</head>
+
+<body>
+	<canvas></canvas>
+
+	<script>
+		class Circle {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.speedY = 0;
+    this.bounciness = Math.random() * 0.35 + 0.6;
+  }
+  draw() {
+    pen.beginPath();
+    pen.arc(this.x, this.y, 10, 0, Math.PI * 2);
+    pen.fillStyle = this.color;
+    pen.fill();
+  }
+  move() {
+    this.speedY += 0.5;
+    this.y += this.speedY;
+    
+    if (this.y > 490) {
+      this.y = 490;
+      this.speedY *= -this.bounciness;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+  }
+}
+
+let canvas = document.querySelector("canvas");
+canvas.width= 400;
+canvas.height= 500;
+let pen = canvas.getContext('2d');
+
+let circles = []
+let colors = ['salmon', 'lightgreen', 'skyblue', 'pink', 'orange', 'silver', 'indigo' ,'hotpink','white','gold'];
+for(let i=0; i<colors.length*2; i++) {
+  circles[i] = new Circle(10 + i * 20, 10 + i * 20, colors[i%colors.length]);
+}
+
+
+setInterval(function() {
+  pen.beginPath();
+  pen.fillStyle="rgba(0,0,0, 0.5)"
+  pen.fillRect(0,0,500,500)
+  pen.fill();
+  
+  for(let i=0; i<circles.length; i++) {
+    circles[i].draw();
+    circles[i].move();
+  }
+}, 1000/60);
+
+setInterval(function() {
+  for(let i=0; i<circles.length; i++) {
+    circles[i].x = 10 + i * 20;
+    circles[i].y = 10 + i * 20;
+  }
+}, 5000);
+	</script>
+</body>
+
+</html>
